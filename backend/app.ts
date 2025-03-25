@@ -1,6 +1,12 @@
 import express from 'express';
 import trafficRouter from './routes/traffic.route';
 import cors from 'cors';
+import 'reflect-metadata';
+import { AppDataSource } from './data-source';
+
+AppDataSource.initialize().then(() => {
+  console.log('Database initialized');
+});
 
 const app = express();
 

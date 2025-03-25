@@ -1,1 +1,1 @@
-export * from './traffic';
+export * from './vehicle-type.enum';
