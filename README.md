@@ -109,3 +109,5 @@ The backend exposes the following endpoints:
 - **Proper input validation** to ensure API requests are well-formed.
 - **Improve UI/UX** with additional filters and controls (e.g., duration, country).
 - **env** variables validation
+
+[Scalability Plan Document](https://docs.google.com/document/d/1hfxPrWDkIdKOL0_2kL8-EWL273eKEZik2PeORmzKAyk/edit?usp=sharing)
