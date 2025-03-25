@@ -11,7 +11,7 @@ export const HomePage = () => {
   const { byCountry: byCountryData, byVehicleType: byVehicleTypeData } = data;
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/traffic`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/traffic/grouped`)
       .then((res) => res.json())
       .then((json) => setData(json))
       .catch((err) => console.error("Error fetching traffic data:", err));

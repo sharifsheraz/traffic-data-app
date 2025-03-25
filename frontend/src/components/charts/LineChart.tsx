@@ -14,7 +14,7 @@ export const LineChart = ({
   yKey,
   color,
 }: {
-  data: any[];
+  data: unknown[];
   xKey: string;
   yKey: string;
   color: string;

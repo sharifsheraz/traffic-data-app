@@ -14,7 +14,7 @@ export const BarChart = ({
   yKey,
   color,
 }: {
-  data: any[];
+  data: unknown[];
   xKey: string;
   yKey: string;
   color: string;

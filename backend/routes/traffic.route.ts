@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { all } from '../controllers/traffic.controller';
+import { getGroupedEvents, getEvents, createEvent } from '../controllers';
 
 const router = Router();
 
-router.get('/', all);
+router.get('/grouped', getGroupedEvents);
+router.get('/', getEvents);
+router.post('/', createEvent);
 
 export default router;

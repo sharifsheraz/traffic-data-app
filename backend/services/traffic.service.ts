@@ -1,22 +1,52 @@
 import { AppDataSource } from '../data-source';
 import { TrafficEvent } from '../entity';
+import { VehicleType } from '../types';
+import { Repository } from 'typeorm';
 
-export const getAllTraffic = async () => {
-  const trafficRepository = AppDataSource.getRepository(TrafficEvent);
+export class TrafficService {
+  private trafficRepository: Repository<TrafficEvent>;
 
-  const byCountry = await trafficRepository
-    .createQueryBuilder('traffic')
-    .select('traffic.country', 'country')
-    .addSelect('COUNT(*)::int', 'trafficCount')
-    .groupBy('traffic.country')
-    .getRawMany();
+  constructor() {
+    this.trafficRepository = AppDataSource.getRepository(TrafficEvent);
+  }
 
-  const byVehicleType = await trafficRepository
-    .createQueryBuilder('traffic')
-    .select('traffic.vehicleType', 'vehicleType')
-    .addSelect('COUNT(*)::int', 'trafficCount')
-    .groupBy('traffic.vehicleType')
-    .getRawMany();
+  async getGroupedEvents() {
+    const byCountry = await this.trafficRepository
+      .createQueryBuilder('traffic')
+      .select('traffic.country', 'country')
+      .addSelect('COUNT(*)::int', 'trafficCount')
+      .groupBy('traffic.country')
+      .getRawMany();
 
-  return { byCountry, byVehicleType };
-};
+    const byVehicleType = await this.trafficRepository
+      .createQueryBuilder('traffic')
+      .select('traffic.vehicleType', 'vehicleType')
+      .addSelect('COUNT(*)::int', 'trafficCount')
+      .groupBy('traffic.vehicleType')
+      .getRawMany();
+
+    return { byCountry, byVehicleType };
+  }
+
+  async getEvents(page: number, limit: number) {
+    const [data, total] = await this.trafficRepository.findAndCount({
+      order: { timestamp: 'DESC' },
+      take: limit,
+      skip: (page - 1) * limit,
+    });
+
+    return {
+      data,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async createEvent(country: string, vehicleType: VehicleType, timestamp: Date) {
+    const newEvent = this.trafficRepository.create({ country, vehicleType, timestamp });
+    return await this.trafficRepository.save(newEvent);
+  }
+}
+
+export const trafficService = new TrafficService();

@@ -13,7 +13,7 @@ export const PieChart = ({
   nameKey,
   colors,
 }: {
-  data: any[];
+  data: unknown[];
   dataKey: string;
   nameKey: string;
   colors: string[];

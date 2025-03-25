@@ -13,6 +13,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use('/traffic', trafficRouter);
+app.use('/api/traffic', trafficRouter);
 
 export default app;
